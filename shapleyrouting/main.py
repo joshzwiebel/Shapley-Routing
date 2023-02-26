@@ -22,7 +22,8 @@ def shapley_value(players, game):
     return shapley
 
 
-def game(coalition): return 5 if 'A' in coalition else 1
+def game(coalition):
+    return 5 if 'A' in coalition else 1
 
 
 print(shapley_value(['A', 'B', 'C'], game))
@@ -30,23 +31,25 @@ print(shapley_value(['A', 'B', 'C'], game))
 
 def SHAPO(num, Distances):
     shapo = [0.0] * num
-    for i in range(1, num+1):
-        shapo[i-1] += 1.0/i * Distances[0][i]
-        shapo[i-1] += 1.0/(num-i+1) * Distances[i][0]
-        for q in range(i+1, num+1):
-            shapo[i-1] -= 1.0 / (q * (q - 1)) * Distances[0][q]
-            shapo[i-1] += 1.0/((q-i)*(q-i+1)) * Distances[i][q]
+    for i in range(1, num + 1):
+        shapo[i - 1] += 1.0 / i * Distances[0][i]
+        shapo[i - 1] += 1.0 / (num - i + 1) * Distances[i][0]
+        for q in range(i + 1, num + 1):
+            shapo[i - 1] -= 1.0 / (q * (q - 1)) * Distances[0][q]
+            shapo[i - 1] += 1.0 / ((q - i) * (q - i + 1)) * Distances[i][q]
         for p in range(1, i):
-            shapo[i-1] += 1.0/((i-p)*(i-p+1)) * Distances[p][i]
-            shapo[i-1] -= 1.0/((num-p)*(num-p+1)) * Distances[p][0]
-            for q in range(i+1, num+1):
-                shapo[i-1] -= 2.0/((q-p)*(q-p+1)*(q-p-1)) * Distances[p][q]
+            shapo[i - 1] += 1.0 / ((i - p) * (i - p + 1)) * Distances[p][i]
+            shapo[i - 1] -= 1.0 / ((num - p) * (num - p + 1)) * Distances[p][0]
+            for q in range(i + 1, num + 1):
+                shapo[i - 1] -= (
+                    2.0
+                    / ((q - p) * (q - p + 1) * (q - p - 1))
+                    * Distances[p][q]
+                )
     return shapo
 
 
 num = 2
-Distances = [[0, 1, 2],
-             [1, 0, 3],
-             [2, 3, 0]]
+Distances = [[0, 1, 2], [1, 0, 3], [2, 3, 0]]
 
 print(SHAPO(num, Distances))
