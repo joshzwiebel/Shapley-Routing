@@ -1,5 +1,7 @@
 # Shapley-Routing
 
+Documentation can be found [here](https://joshzwiebel.github.io/Shapley-Routing/build/html/index.html).
+
 ## Installation
 
 :one: Install [Poetry](https://python-poetry.org/):
