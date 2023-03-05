@@ -1,5 +1,7 @@
 # Shapley-Routing
 
+Documentation can be found [here](https://joshzwiebel.github.io/Shapley-Routing/build/html/index.html).
+
 ## Installation
 
 :one: Install [Poetry](https://python-poetry.org/):
@@ -34,4 +36,13 @@ poetry run pytest -v .
 ```bash
 poetry run coverage run -m pytest -v .
 poetry run coverage report -m
+```
+
+## Docs
+
+Docs can be built using the following commands:
+
+```bash
+cd docs/
+poetry run make html
 ```
