@@ -5,6 +5,31 @@ import numpy as np
 def shapley_value(players, game):
     """
     Compute the Shapley value of a game.
+
+    .. math::
+        \\varphi_m(v) = \\frac{1}{p} \\sum\\limits_s
+        \\frac{v(S \\cup \\{m\\}) - v(S)}{\\binom{p - 1}{k(S))}},
+        \\:\\:\\:\\: m = 1, 2, 3, ..., p
+
+    Parameters
+    ----------
+    players : list
+        List of players of game.
+
+    game : Callable
+        Function that takes coalition as parameter and returns score.
+
+    Returns
+    -------
+    shapley : dict
+        Shapley values by players.
+
+    Examples
+    --------
+    >>> players = ['A', 'B', 'C']
+    >>> game = lambda coalition: 5 if 'A' in coalition else 1
+    >>> shapley_value(players, game)
+    {'A': 10.0, 'B': 4.0, 'C': 4.0}
     """
     n = len(players)
     shapley = {}
@@ -22,14 +47,30 @@ def shapley_value(players, game):
     return shapley
 
 
-def game(coalition):
-    return 5 if 'A' in coalition else 1
-
-
-print(shapley_value(['A', 'B', 'C'], game))
-
-
 def SHAPO(num, Distances):
+    """
+    Compute ride sharing Shapley values.
+
+    Parameters
+    ----------
+    num : int
+        Number of players.
+
+    Distances : list
+        2D list of distances.
+
+    Returns
+    -------
+    shapo : list
+        List of shapley values.
+
+    Examples
+    --------
+    >>> num = 2
+    >>> Distances = [[0, 1, 2], [1, 0, 3], [2, 3, 0]]
+    >>> SHAPO(num, Distances)
+    [2.0, 4.0]
+    """
     shapo = [0.0] * num
     for i in range(1, num + 1):
         shapo[i - 1] += 1.0 / i * Distances[0][i]
@@ -49,7 +90,11 @@ def SHAPO(num, Distances):
     return shapo
 
 
-num = 2
-Distances = [[0, 1, 2], [1, 0, 3], [2, 3, 0]]
+if __name__ == '__main__':
+    players = ['A', 'B', 'C']
+    print(shapley_value(players, lambda x: 5 if 'A' in x else 1))
 
-print(SHAPO(num, Distances))
+    num = 2
+    Distances = [[0, 1, 2], [1, 0, 3], [2, 3, 0]]
+
+    print(SHAPO(num, Distances))
