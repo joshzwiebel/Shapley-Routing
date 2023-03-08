@@ -1,8 +1,15 @@
-class RideShare():
-    def __init__(self,num_players,distances) -> None:
+import numpy as np
+
+
+class RideShare:
+    def __init__(self, num_players, distances):
         self.num_players = num_players
-        self.distances = distances
-    def SHAPO(num, Distances):
+        self.distances = np.array(distances)
+        # assert that the number of players is equal to
+        # the number of rows in the distance matrix
+        assert self.num_players + 1 == len(self.distances)
+
+    def SHAPO(self, num, Distances):
         """
         Compute ride sharing Shapley values.
 
@@ -35,7 +42,9 @@ class RideShare():
                 shapo[i - 1] += 1.0 / ((q - i) * (q - i + 1)) * Distances[i][q]
             for p in range(1, i):
                 shapo[i - 1] += 1.0 / ((i - p) * (i - p + 1)) * Distances[p][i]
-                shapo[i - 1] -= 1.0 / ((num - p) * (num - p + 1)) * Distances[p][0]
+                shapo[i - 1] -= (
+                    1.0 / ((num - p) * (num - p + 1)) * Distances[p][0]
+                )
                 for q in range(i + 1, num + 1):
                     shapo[i - 1] -= (
                         2.0
@@ -43,9 +52,7 @@ class RideShare():
                         * Distances[p][q]
                     )
         return shapo
-    
+
     def fit(self):
-        assert self.num_players == len(self.distances)
-        self.shap_values = self.SHAPO(self.num_players,self.distances)
+        self.shap_values = self.SHAPO(self.num_players, self.distances)
         return self.shap_values
-    
