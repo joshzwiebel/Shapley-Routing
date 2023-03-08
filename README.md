@@ -10,6 +10,12 @@ Documentation can be found [here](https://joshzwiebel.github.io/Shapley-Routing/
 pip install poetry
 ```
 
+If you encounter an error, try:
+
+```bash
+export PATH="/home/<user>/.local/bin:$PATH"
+```
+
 :two: Install dependencies:
 
 ```bash
