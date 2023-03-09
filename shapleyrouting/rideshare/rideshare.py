@@ -145,7 +145,7 @@ class RideShare:
         # Use approximation if there are over 10 players
         self.shap_values = (
             self.SHAPO(self.num_players, self.distances)
-            if self.num_players >= 10
+            if self.num_players < 10
             else self.APPROO1(self.num_players, self.distances)
         )
         return self.shap_values
