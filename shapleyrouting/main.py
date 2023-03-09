@@ -90,7 +90,7 @@ def SHAPO(num, Distances):
     return shapo
 
 
-def approO1(num, Distances):
+def APPROO1(num, Distances):
     """
     Compute 2D approximation for Shapley values.
 
@@ -143,7 +143,7 @@ def approO1(num, Distances):
         [1, 7, 7, 1, 8, 2, 6, 1, 0, 4],
         [7, 6, 1, 5, 8, 5, 1, 2, 4, 0]
         ]
-    >>> approO1(num, Distances)
+    >>> APPROO1(num, Distances)
     [-1.3249999999999993,
     5.001190476190477,
     2.994047619047622,
