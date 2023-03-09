@@ -318,11 +318,75 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-shapleyrouting.main">
-<span id="api-docs"></span><h1>API Docs<a class="headerlink" href="#module-shapleyrouting.main" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="shapleyrouting.main.SHAPO">
-<span class="sig-prename descclassname"><span class="pre">shapleyrouting.main.</span></span><span class="sig-name descname"><span class="pre">SHAPO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Distances</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.main.SHAPO" title="Permalink to this definition">#</a></dt>
+  <section id="module-shapleyrouting.rideshare">
+<span id="api-docs"></span><h1>API Docs<a class="headerlink" href="#module-shapleyrouting.rideshare" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shapleyrouting.rideshare.</span></span><span class="sig-name descname"><span class="pre">RideShare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare.APPROO1">
+<span class="sig-name descname"><span class="pre">APPROO1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Distances</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare.APPROO1" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute 2D approximation for Shapley values.</p>
+<p>This algorithm is designed based on the Appro-O(1) algorithm for
+Shapley value approximation by Dan C. Popescu and Philip Kilby.</p>
+<p>The approximation equation is as follows for a given location k:</p>
+<div class="math notranslate nohighlight">
+\[\phi^{(1)}_k=s_{kk}-Sc(S_{1,k},...,S_{k-1,k},S_{k+1,k},...,S_{n,k})\]</div>
+<p>This equation uses the equations for shared distance between two
+locations, i and j, with respect to starting location.</p>
+<div class="math notranslate nohighlight">
+\[s_{ij} = d_{0i}+d_{0j}-d_{ij}\]</div>
+<p>It also uses the Shared Contribution function. Please note in the
+equation below that the vector y is equivalent to the input
+vector x sorted in descending order.</p>
+<div class="math notranslate nohighlight">
+\[Sc(x_1,x_2,...,x_k)=\sum\limits_{i=1}^{k} \frac{y_i}{i(i+1)}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> (<em>int</em>) – Number of players.</p></li>
+<li><p><strong>Distances</strong> (<em>list</em>) – 2D list of distances.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>appro</strong> – List of approximated shapley values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Distances</span> <span class="o">=</span> <span class="p">[</span>
+<span class="go">    [0, 2, 9, 7, 7, 7, 6, 7, 1, 7],</span>
+<span class="go">    [2, 0, 5, 9, 9, 8, 9, 1, 7, 6],</span>
+<span class="go">    [9, 5, 0, 9, 6, 5, 7, 4, 7, 1],</span>
+<span class="go">    [7, 9, 9, 0, 1, 2, 8, 7, 1, 5],</span>
+<span class="go">    [7, 9, 6, 1, 0, 5, 5, 5, 8, 8],</span>
+<span class="go">    [7, 8, 5, 2, 5, 0, 1, 8, 2, 5],</span>
+<span class="go">    [6, 9, 7, 8, 5, 1, 0, 1, 6, 1],</span>
+<span class="go">    [7, 1, 4, 7, 5, 8, 1, 0, 1, 2],</span>
+<span class="go">    [1, 7, 7, 1, 8, 2, 6, 1, 0, 4],</span>
+<span class="go">    [7, 6, 1, 5, 8, 5, 1, 2, 4, 0]</span>
+<span class="go">    ]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">APPROO1</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">Distances</span><span class="p">)</span>
+<span class="go">[-1.3249999999999993,</span>
+<span class="go">5.001190476190477,</span>
+<span class="go">2.994047619047622,</span>
+<span class="go">3.05952380952381,</span>
+<span class="go">2.8861111111111093,</span>
+<span class="go">2.2075396825396822,</span>
+<span class="go">2.908333333333333,</span>
+<span class="go">-3.362698412698413,</span>
+<span class="go">2.4940476190476204]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare.SHAPO">
+<span class="sig-name descname"><span class="pre">SHAPO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Distances</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare.SHAPO" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute ride sharing Shapley values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -347,35 +411,11 @@ document.write(`
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="shapleyrouting.main.shapley_value">
-<span class="sig-prename descclassname"><span class="pre">shapleyrouting.main.</span></span><span class="sig-name descname"><span class="pre">shapley_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.main.shapley_value" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute the Shapley value of a game.</p>
-<div class="math notranslate nohighlight">
-\[\varphi_m(v) = \frac{1}{p} \sum\limits_s
-\frac{v(S \cup \{m\}) - v(S)}{\binom{p - 1}{k(S))}},
-\:\:\:\: m = 1, 2, 3, ..., p\]</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>players</strong> (<em>list</em>) – List of players of game.</p></li>
-<li><p><strong>game</strong> (<em>Callable</em>) – Function that takes coalition as parameter and returns score.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>shapley</strong> – Shapley values by players.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">players</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">game</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">coalition</span><span class="p">:</span> <span class="mi">5</span> <span class="k">if</span> <span class="s1">&#39;A&#39;</span> <span class="ow">in</span> <span class="n">coalition</span> <span class="k">else</span> <span class="mi">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shapley_value</span><span class="p">(</span><span class="n">players</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
-<span class="go">{&#39;A&#39;: 10.0, &#39;B&#39;: 4.0, &#39;C&#39;: 4.0}</span>
-</pre></div>
-</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare.fit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -412,8 +452,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.main.SHAPO"><code class="docutils literal notranslate"><span class="pre">SHAPO()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.main.shapley_value"><code class="docutils literal notranslate"><span class="pre">shapley_value()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare"><code class="docutils literal notranslate"><span class="pre">RideShare</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.APPROO1"><code class="docutils literal notranslate"><span class="pre">RideShare.APPROO1()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.SHAPO"><code class="docutils literal notranslate"><span class="pre">RideShare.SHAPO()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.fit"><code class="docutils literal notranslate"><span class="pre">RideShare.fit()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

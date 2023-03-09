@@ -1,7 +1,7 @@
 API Docs
 ========
 
-.. automodule:: shapleyrouting.main
+.. automodule:: shapleyrouting.rideshare
    :members:
    :undoc-members:
    :show-inheritance:
