@@ -12,11 +12,14 @@ def test_cost_samples():
     )
     rs = RideShare(num_players, distances)
 
-    subsets = np.array([
-        [True, False, False],
-        [False, True, True],
-        [True, True, False],
-    ], dtype=bool)
+    subsets = np.array(
+        [
+            [True, False, False],
+            [False, True, True],
+            [True, True, False],
+        ],
+        dtype=bool,
+    )
     costs = np.array([12, 6, 18], dtype=np.float64)
     shapley_values = rs.cost_samples(subsets, costs)
 
