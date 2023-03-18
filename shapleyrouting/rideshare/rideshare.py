@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.typing import NDArray
 
 
 class RideShare:
@@ -140,6 +141,62 @@ class RideShare:
             # Get approximate Shapley value
             appro.append(SharedDistances[k][k] - Sc)
         return appro
+
+    def cost_samples(
+        self,
+        subsets: NDArray[np.bool_],
+        costs: NDArray[np.float64],
+    ):
+        """
+        Compute Shapley values for ride sharing given cost samples.
+
+        This algorithm is designed based on the cost sharing algorithm based on
+        cost samples, written by Eric Balkanski, Umar Syed, and Sergei
+        Vassilvitskii.
+
+        Given a set of :math:`m` samples,
+        :math:`(S_1, C(S_1)), (S_2, C(S_2)), ..., (S_m, C(S_m))`, from
+        distribution :math:`\\mathcal{D}`, where :math:`S_i` represents a
+        subset of players and :math:`C(S_i)` represents the cost of the subset
+        of players, the approximate share of the player :math:`i`, denoted by
+        :math:`\\tilde{\\Phi^\\mathcal{D}_i}` is given by:
+
+        .. math::
+            \\tilde{\\phi^\\mathcal{D}_i} =
+            \\frac{1}{m} \\sum\\limits_{S_j : i \\in S_j} \\frac{C(S_j)}{|S_j|}
+
+        Parameters
+        ----------
+        subsets : numpy.ndarray
+            2D boolean array of size ``mxn``, where ``m`` is the number of
+            subsets of players and n is the number of players. Each boolean
+            entry indicates whether or not the player was included in that
+            subset.
+
+        costs : numpy.ndarray
+            1D array of length ``m`` indicating the total costs incurred by
+            each subset.
+
+        Examples
+        --------
+        >>> import numpy as np
+        >>> subsets = np.array([
+        ...     [True, False, False],
+        ...     [False, True, True],
+        ...     [True, True, False],
+        ... ], dtype=bool)
+        >>> costs = np.array([10, 5, 8], dtype=np.float64)
+        >>> cost_samples(subsets, costs)
+        array([4.66666667, 2.16666667, 0.83333333])
+        """
+        if subsets.shape[0] != costs.shape[0]:
+            raise ValueError('Number of costs much match number of subsets')
+
+        num_players = np.sum(subsets, axis=1)
+        shapley_all = costs / num_players
+        shapley_players = np.matmul(shapley_all, subsets) / costs.shape[0]
+
+        return shapley_players
 
     def fit(self):
         # Use approximation if there are over 10 players
