@@ -412,6 +412,48 @@ vector x sorted in descending order.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare.cost_samples">
+<span class="sig-name descname"><span class="pre">cost_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">costs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare.cost_samples" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute Shapley values for ride sharing given cost samples.</p>
+<p>This algorithm is designed based on the cost sharing algorithm based on
+cost samples, written by Eric Balkanski, Umar Syed, and Sergei
+Vassilvitskii.</p>
+<p>Given a set of <span class="math notranslate nohighlight">\(m\)</span> samples,
+<span class="math notranslate nohighlight">\((S_1, C(S_1)), (S_2, C(S_2)), ..., (S_m, C(S_m))\)</span>, from
+distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, where <span class="math notranslate nohighlight">\(S_i\)</span> represents a
+subset of players and <span class="math notranslate nohighlight">\(C(S_i)\)</span> represents the cost of the subset
+of players, the approximate share of the player <span class="math notranslate nohighlight">\(i\)</span>, denoted by
+<span class="math notranslate nohighlight">\(\tilde{\Phi^\mathcal{D}_i}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\phi^\mathcal{D}_i} =
+\frac{1}{m} \sum\limits_{S_j : i \in S_j} \frac{C(S_j)}{|S_j|}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subsets</strong> (<em>numpy.ndarray</em>) – 2D boolean array of size <code class="docutils literal notranslate"><span class="pre">mxn</span></code>, where <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of
+subsets of players and n is the number of players. Each boolean
+entry indicates whether or not the player was included in that
+subset.</p></li>
+<li><p><strong>costs</strong> (<em>numpy.ndarray</em>) – 1D array of length <code class="docutils literal notranslate"><span class="pre">m</span></code> indicating the total costs incurred by
+each subset.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">costs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cost_samples</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">costs</span><span class="p">)</span>
+<span class="go">array([4.66666667, 2.16666667, 0.83333333])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="shapleyrouting.rideshare.RideShare.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shapleyrouting.rideshare.RideShare.fit" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -455,6 +497,7 @@ vector x sorted in descending order.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare"><code class="docutils literal notranslate"><span class="pre">RideShare</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.APPROO1"><code class="docutils literal notranslate"><span class="pre">RideShare.APPROO1()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.SHAPO"><code class="docutils literal notranslate"><span class="pre">RideShare.SHAPO()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.cost_samples"><code class="docutils literal notranslate"><span class="pre">RideShare.cost_samples()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapleyrouting.rideshare.RideShare.fit"><code class="docutils literal notranslate"><span class="pre">RideShare.fit()</span></code></a></li>
 </ul>
 </li>

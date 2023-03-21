@@ -37,6 +37,9 @@ html_static_path = ['_static']
 # preserve default argument values as in source code
 autodoc_preserve_defaults = True
 
+# don't show type hints
+autodoc_typehints = 'none'
+
 
 # html_logo = '../img/logo.png'
 
