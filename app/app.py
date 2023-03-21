@@ -10,7 +10,7 @@ from shapleyrouting.rideshare import RideShare
 geolocator = Nominatim(user_agent="ShapleyRouting")
 geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
 
-num_locations = st.sidebar.slider('Number of locations', 2, 10, 2)
+num_locations = st.sidebar.slider('Number of locations', 2, 10, 3)
 locations = []
 st.sidebar.write("Enter Locations in the order they will be visited, where the first location is the starting location")
 for i in range(num_locations):
