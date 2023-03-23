@@ -121,7 +121,7 @@ class RideShare:
         # Compute matrix of shared distances
         SharedDistances = [
             [
-                Distances[0][i] + Distances[0][j] - Distances[i][j]
+                max(Distances[0][i] + Distances[0][j] - Distances[i][j], 0)
                 for j in range(len(Distances[0]))
             ]
             for i in range(len(Distances))
