@@ -22,13 +22,16 @@ for i in range(num_locations):
     )
     location_geocoded = geocode(location_option)
     locations.append(location_geocoded)
-
-map_data = pd.DataFrame(
-    {
-        'lat': [location.latitude for location in locations],
-        'lon': [location.longitude for location in locations],
-    }
-)
+try:
+    map_data = pd.DataFrame(
+        {
+            'lat': [location.latitude for location in locations],
+            'lon': [location.longitude for location in locations],
+        }
+    )
+except AttributeError:
+    st.write('Please enter valid locations')
+    st.stop()
 
 st.map(map_data)
 
