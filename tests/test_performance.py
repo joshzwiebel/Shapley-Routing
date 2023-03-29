@@ -14,8 +14,8 @@ def test_approximation_switch():
     max_players = 50
     min_players = 2
     faster_algorithm = np.empty(
-        [100, max_players - min_players],
-        dtype=np.chararray)
+        [100, max_players - min_players], dtype=np.chararray
+    )
     for i in range(100):
         for num_players in range(min_players, max_players):
             Distances = buildInput(num_players)
@@ -37,11 +37,11 @@ def test_approximation_switch():
     n_condition = -1
     average_faster_algorithm = np.empty(3, dtype=np.chararray)
     for n in range(len(faster_algorithm[0])):
-
         # tally faster algorithm for each iteration
         vals, counts = np.unique(
             np.array([item[n] for item in faster_algorithm]),
-            return_counts=True)
+            return_counts=True,
+        )
         # find mode
         mode_value = counts.tolist().index(np.max(counts))
 
