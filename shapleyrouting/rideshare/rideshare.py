@@ -121,7 +121,7 @@ class RideShare:
         # Compute matrix of shared distances
         SharedDistances = [
             [
-                Distances[0][i] + Distances[0][j] - Distances[i][j]
+                max(Distances[0][i] + Distances[0][j] - Distances[i][j], 0)
                 for j in range(len(Distances[0]))
             ]
             for i in range(len(Distances))
@@ -200,9 +200,8 @@ class RideShare:
 
     def fit(self):
         # Use approximation if there are over 10 players
-        self.shap_values = (
-            self.SHAPO(self.num_players, self.distances)
-            if self.num_players < 10
-            else self.APPROO1(self.num_players, self.distances)
-        )
+        if self.num_players < 10:
+            self.shap_values = self.SHAPO(self.num_players, self.distances)
+        else:
+            self.shap_values = self.APPROO1(self.num_players, self.distances)
         return self.shap_values
