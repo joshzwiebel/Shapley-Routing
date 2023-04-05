@@ -58,6 +58,3 @@ def test_approximation_switch():
     print('Approximation should be used when n={}'.format(n_condition))
     # accept wide range centered around 10 to appease build pipeline
     assert n_condition >= 6 and n_condition <= 14
-
-
-test_approximation_switch()
