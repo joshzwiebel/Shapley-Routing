@@ -119,13 +119,15 @@ class RideShare:
         2.4940476190476204]
         """
         # Compute matrix of shared distances
-        SharedDistances = np.array([
+        SharedDistances = np.array(
             [
-                max(Distances[0][i] + Distances[0][j] - Distances[i][j], 0)
-                for j in range(len(Distances[0]))
+                [
+                    max(Distances[0][i] + Distances[0][j] - Distances[i][j], 0)
+                    for j in range(len(Distances[0]))
+                ]
+                for i in range(len(Distances))
             ]
-            for i in range(len(Distances))
-        ])
+        )
 
         appro = np.array([])
         for k in range(1, len(Distances)):
