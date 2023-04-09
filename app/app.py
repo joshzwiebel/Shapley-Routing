@@ -26,7 +26,7 @@ def requests_geocode(location):
     # url = f'https://nominatim.openstreetmap.org/search?q={location}&format=json'
     url = f"https://geocode.maps.co/search?q={location}"
     response = requests.get(url)
-    if response.status_code == 200:
+    if response.status_code == 200 and response.json():
         return response.json()[0]
     else:
         return None
@@ -54,7 +54,7 @@ if run_button:
             }
         )
         st.write(map_data)
-    except AttributeError:
+    except AttributeError and TypeError:
         st.write('Please enter valid locations')
         st.stop()
 
