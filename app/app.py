@@ -58,7 +58,6 @@ if run_button:
                 'lon': [float(location['lon']) for location in locations],
             }
         )
-        st.write(map_data)
     except AttributeError and TypeError:
         st.write('Please enter valid locations')
         st.stop()
@@ -73,8 +72,6 @@ if run_button:
                     (locations[i]['lat'], locations[i]['lon']),
                     (locations[j]['lat'], locations[j]['lon']),
                 ).km
-
-    st.write(distance_matrix)
 
     ride = RideShare(num_players=num_locations - 1, distances=distance_matrix)
 
