@@ -141,7 +141,7 @@ class RideShare:
                 Sc += x[i - 1] / (i * (i + 1))
 
             # Get approximate Shapley value
-            appro[k-1] = SharedDistances[k][k] - Sc
+            appro[k - 1] = SharedDistances[k][k] - Sc
             # np.append(appro, SharedDistances[k][k] - Sc)
         return appro
 
