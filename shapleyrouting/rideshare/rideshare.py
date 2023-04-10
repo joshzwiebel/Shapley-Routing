@@ -34,7 +34,7 @@ class RideShare:
         >>> SHAPO(num, Distances)
         [2.0, 4.0]
         """
-        shapo = np.array([0.0] * num)
+        shapo = np.zeros(num, dtype=np.float64)
         for i in range(1, num + 1):
             shapo[i - 1] += 1.0 / i * Distances[0][i]
             shapo[i - 1] += 1.0 / (num - i + 1) * Distances[i][0]
@@ -129,7 +129,7 @@ class RideShare:
             ]
         )
 
-        appro = np.array([])
+        appro = np.zeros(len(Distances)-1, dtype=np.float64)
         for k in range(1, len(Distances)):
             # Sort input vector in descending order
             x = [SharedDistances[n][k] for n in range(num)]
@@ -141,7 +141,8 @@ class RideShare:
                 Sc += x[i - 1] / (i * (i + 1))
 
             # Get approximate Shapley value
-            np.append(appro, SharedDistances[k][k] - Sc)
+            appro[k-1] = SharedDistances[k][k] - Sc
+            # np.append(appro, SharedDistances[k][k] - Sc)
         return appro
 
     def cost_samples(
