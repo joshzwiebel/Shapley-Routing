@@ -129,7 +129,7 @@ class RideShare:
             ]
         )
 
-        appro = np.zeros(len(Distances)-1, dtype=np.float64)
+        appro = np.zeros(len(Distances) - 1, dtype=np.float64)
         for k in range(1, len(Distances)):
             # Sort input vector in descending order
             x = [SharedDistances[n][k] for n in range(num)]
