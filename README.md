@@ -2,6 +2,7 @@
 
 Documentation can be found [here](https://joshzwiebel.github.io/Shapley-Routing/build/html/index.html).
 
+Try it out using our Streamlit webapp [here!](https://shapley-ridesharing.streamlit.app/)
 ## Installation
 
 :one: Install [Poetry](https://python-poetry.org/):
